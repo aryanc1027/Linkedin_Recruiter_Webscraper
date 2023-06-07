@@ -82,7 +82,7 @@ with sync_playwright() as p:  # closes browser once code is finished
 
     rows = [masterNames, masterLocation, masterCompany, masterJobTitle]
     filename = 'output.csv'
-    with open(filename, 'w' , newline='') as file:
+    with open(filename, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
 
