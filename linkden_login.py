@@ -6,8 +6,8 @@ import csv
 nlp = spacy.load("en_core_web_sm")
 
 with sync_playwright() as p:  # closes browser once code is finished
-    username = 'mangoaryan02@gmail.com'
-    password = 'ChickenHello123#()*'
+    username = input()
+    password = input()
     browser = p.chromium.launch(headless=False, slow_mo=50)
     page = browser.new_page()
     page.goto('https://www.linkedin.com/home')
