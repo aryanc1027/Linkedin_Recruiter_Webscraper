@@ -73,7 +73,7 @@
       <workItem from="1684699833335" duration="647000" />
       <workItem from="1685299150190" duration="527000" />
       <workItem from="1685394367482" duration="15274000" />
-      <workItem from="1686085938562" duration="8992000" />
+      <workItem from="1686085938562" duration="9298000" />
     </task>
     <task id="LOCAL-00001" summary="Logs into Linkedin using input() via user and redirects to recruiters page">
       <created>1685403308527</created>
@@ -89,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686102525326</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Completed backend to point of getting csv file with all recurters data">
+      <created>1686102679097</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686102679097</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
