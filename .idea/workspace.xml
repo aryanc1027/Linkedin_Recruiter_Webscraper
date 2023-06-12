@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd6c2b88-74ea-4892-a591-6caf274016ea" name="Changes" comment="Completed backend to point of getting csv file with all recurters data" />
+    <list default="true" id="cd6c2b88-74ea-4892-a591-6caf274016ea" name="Changes" comment="aron">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +35,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -74,7 +81,7 @@
       <workItem from="1685299150190" duration="527000" />
       <workItem from="1685394367482" duration="15274000" />
       <workItem from="1686085938562" duration="8992000" />
-      <workItem from="1686598624586" duration="359000" />
+      <workItem from="1686598624586" duration="977000" />
     </task>
     <task id="LOCAL-00001" summary="Logs into Linkedin using input() via user and redirects to recruiters page">
       <created>1685403308527</created>
