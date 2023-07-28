@@ -140,24 +140,21 @@ def recruitmentInitiate():
 
 
 def scrape():
-    #GETTING ALL PROFILE URLS
-    scrollLittle()
-    lnks=driver.find_elements(By.TAG_NAME,"a")
-    # traverse list
-    linkStrings = []
-    for lnk in lnks:
-    # get_attribute() to get all href
-        linkStrings.append(lnk.get_attribute("href"))
 
+    scrollLittle()
+
+    # getting all urls from page
     links = set()
     html = driver.page_source
     soup = BeautifulSoup(html, features="lxml")
     pplHTML = soup.findAll('a', href=re.compile(r'/in/'))
 
+    # filtering to get profile urls
     for link in soup.findAll("a", href=re.compile(r'/in/')):
         if 'href' in link.attrs:
             links.add(link['href'])
     
+    # printing all urls
     print("\n".join(links))
                 
 
