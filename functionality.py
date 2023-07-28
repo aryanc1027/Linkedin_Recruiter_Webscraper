@@ -21,20 +21,36 @@ def loginInitiate():
     # Opening linkedIn's login page
     driver.get("https://linkedin.com/uas/login")
 
-    # entering email/phone
-    user = input('What is your email or phone number?\n')
-    username = driver.find_element(By.ID, "username")
-    username.send_keys(user) 
+    time.sleep(4)
 
-    # entering password
-    passw = input('What is your password?\n')
+    while (driver.current_url == "https://www.linkedin.com/uas/login"):
+        # entering email/phone
+        user = input('What is your email or phone number?\n') 
+
+        # entering password
+        passw = input('What is your password?\n')
+
+        # submitting login information
+        login(user, passw)
+
+        # checks for invalid login
+        if driver.current_url == "https://www.linkedin.com/checkpoint/lg/login-submit":
+            print("Invalid Login Credentials. Please Try Again.")
+            driver.get("https://linkedin.com/uas/login")
+            time.sleep(4)
+
+
+def login(user, passw):
+    username = driver.find_element(By.ID, "username")
+    username.send_keys(user)
+
     password = driver.find_element(By.ID, "password")
     password.send_keys(passw)
 
-    # submitting login information
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
-    time.sleep(7)
+    time.sleep(3)
+
 
 # detects when user closes window (should be last executed method)
 def detectClosedWindow():
@@ -100,24 +116,28 @@ def scrollLittle():
             break
 
 def recruitmentInitiate():
+    
     # Filtering by specific user-requested company/companies (add multiple companies functionality later)
     userCompany = input('What company are you interested in?\n')
+    
     # Google searching for company's linkedin
     driver.get('http://www.google.com')
     search = driver.find_element(By.NAME, 'q')
     search.send_keys(userCompany + ' linkedin')
     search.send_keys(Keys.RETURN) # hit return after you enter search text
+    
     time.sleep(3) # sleep for 5 seconds so you can see the results
     # gets all search results and clicks first link
     driver.find_element(By.CLASS_NAME, "iUh30").click()
+    
     # scrolls to bottom to load all elements of webpage
     scrollToBottom()
 
     curr_url = driver.current_url
     driver.get(curr_url + "people/?keywords=recruitment")
 
-
     scrape()
+
 
 def scrape():
     #GETTING ALL PROFILE URLS
@@ -139,11 +159,7 @@ def scrape():
             links.add(link['href'])
     
     print("\n".join(links))
-
-    
-    
-            
-    
+                
 
 loginInitiate()
 recruitmentInitiate()
