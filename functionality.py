@@ -14,8 +14,8 @@ import spacy
 from urllib.request import urlopen    
 #-------------------------------------------------------------------------------------------
 
-#using webdriver to automate webpage (Chrome)
-driver = webdriver.Chrome(r"C:\Users\arnav\Downloads\chromedriver_win32\chromedriver.exe")    
+# using webdriver to automate webpage (Chrome)   
+driver = webdriver.Chrome(executable_path=r'C:\path\to\chromedriver.exe')
 
 def loginInitiate():
     # Opening linkedIn's login page
@@ -162,5 +162,6 @@ def scrape():
                 
 
 loginInitiate()
+detectClosedWindow()
 recruitmentInitiate()
 detectClosedWindow()
