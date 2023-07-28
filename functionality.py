@@ -11,9 +11,7 @@ import requests
 import re
 from selenium.webdriver.common.action_chains import ActionChains 
 import spacy
-
-
-    
+from urllib.request import urlopen    
 #-------------------------------------------------------------------------------------------
 
 #using webdriver to automate webpage (Chrome)
@@ -131,43 +129,16 @@ def scrape():
     # get_attribute() to get all href
         linkStrings.append(lnk.get_attribute("href"))
 
-    print(len(linkStrings))
-    del linkStrings[0:25]
-    del linkStrings[len(linkStrings) - 83:]
+    links = set()
+    html = driver.page_source
+    soup = BeautifulSoup(html, features="lxml")
+    pplHTML = soup.findAll('a', href=re.compile(r'/in/'))
+
+    for link in soup.findAll("a", href=re.compile(r'/in/')):
+        if 'href' in link.attrs:
+            links.add(link['href'])
     
-    linkNews = [link for link in linkStrings if filterLinks(link)]
-    #filterLinks2(linkStrings)
-
-
-def filterLinks(url):
-
-    # Parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(cc, 'html.parser')
-
-    # Check if the page contains the LinkedIn profile indicator
-    profile_indicator = soup.find('code', attrs={'class': 'top-card-primary-content__title'})
-    if profile_indicator:
-        return True
-
-    return False
-
-
-""""
-def filterLinks2(urls):
-    # Sample list of HTML links
-
-    # Load the spaCy English model
-    nlp = spacy.load('en_core_web_sm')
-    unique_links = set()
-
-    # Iterate over the HTML links and search for names
-    for link in urls:
-        doc = nlp(link)
-        for token in doc:
-            if token.like_url:
-                unique_links.add(token.text)
-                print(token.text)
-"""
+    print("\n".join(links))
 
     
     
