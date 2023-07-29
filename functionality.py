@@ -9,13 +9,18 @@ from selenium.webdriver.common.keys import Keys
 import time
 import requests
 import re
-from selenium.webdriver.common.action_chains import ActionChains 
+from selenium.webdriver.common.action_chains import ActionChains
 import spacy
-from urllib.request import urlopen    
-#-------------------------------------------------------------------------------------------
+from urllib.request import urlopen
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+# -------------------------------------------------------------------------------------------
 
 # using webdriver to automate webpage (Chrome)   
-driver = webdriver.Chrome(executable_path=r'C:\path\to\chromedriver.exe')
+driver = webdriver.Chrome()
+
 
 def loginInitiate():
     # Opening linkedIn's login page
@@ -25,7 +30,7 @@ def loginInitiate():
 
     while (driver.current_url == "https://www.linkedin.com/uas/login"):
         # entering email/phone
-        user = input('What is your email or phone number?\n') 
+        user = input('What is your email or phone number?\n')
 
         # entering password
         passw = input('What is your password?\n')
@@ -61,13 +66,14 @@ def detectClosedWindow():
             break
         time.sleep(1)
 
+
 def scrollToBottom():
     start = time.time()
- 
+
     # will be used in the while loop
     initialScroll = 0
     finalScroll = 1000
- 
+
     while True:
         driver.execute_script(f"window.scrollTo({initialScroll},{finalScroll})")
         # this command scrolls the window starting from
@@ -76,25 +82,26 @@ def scrollToBottom():
         # finalScroll variable
         initialScroll = finalScroll
         finalScroll += 1000
- 
+
         # we will stop the script for 3 seconds so that
         # the data can load
         time.sleep(3)
         # You can change it as per your needs and internet speed
- 
+
         end = time.time()
- 
+
         # scroll for 6 seconds
         if round(end - start) > 6:
             break
 
+
 def scrollLittle():
     start = time.time()
- 
+
     # will be used in the while loop
     initialScroll = 0
     finalScroll = 500
- 
+
     while True:
         driver.execute_script(f"window.scrollTo({initialScroll},{finalScroll})")
         # this command scrolls the window starting from
@@ -103,33 +110,33 @@ def scrollLittle():
         # finalScroll variable
         initialScroll = finalScroll
         finalScroll += 1000
- 
+
         # we will stop the script for 3 seconds so that
         # the data can load
         time.sleep(2)
         # You can change it as per your needs and internet speed
- 
+
         end = time.time()
- 
+
         # scroll for 4 seconds
         if round(end - start) > 4:
             break
 
+
 def recruitmentInitiate():
-    
     # Filtering by specific user-requested company/companies (add multiple companies functionality later)
     userCompany = input('What company are you interested in?\n')
-    
-    # Google searching for company's linkedin
+
+    # Google searching for company's LinkedIn
     driver.get('http://www.google.com')
     search = driver.find_element(By.NAME, 'q')
     search.send_keys(userCompany + ' linkedin')
-    search.send_keys(Keys.RETURN) # hit return after you enter search text
-    
-    time.sleep(3) # sleep for 5 seconds so you can see the results
+    search.send_keys(Keys.RETURN)  # hit return after you enter search text
+
+    time.sleep(3)  # sleep for 5 seconds so you can see the results
     # gets all search results and clicks first link
     driver.find_element(By.CLASS_NAME, "iUh30").click()
-    
+
     # scrolls to bottom to load all elements of webpage
     scrollToBottom()
 
@@ -140,33 +147,33 @@ def recruitmentInitiate():
 
 
 def scrape():
-
     scrollLittle()
 
     # getting all urls from page
     links = set()
     html = driver.page_source
-    soup = BeautifulSoup(html, features="lxml")
+    soup = BeautifulSoup(html, "html.parser")
     pplHTML = soup.findAll('a', href=re.compile(r'/in/'))
 
     # filtering to get profile urls
     for link in soup.findAll("a", href=re.compile(r'/in/')):
         if 'href' in link.attrs:
             links.add(link['href'])
-    
+
     # printing all urls
     print("\n".join(links))
+
+    getTheInfo()
 
 
 def getTheInfo():
     global list_items, certificates_section
     import time
 
-    #Click on people
-    #pull from HTML <a class="app-aware-link
-    #Create a loop to pull however many peoples info
-    #should shove everything into a json
-
+    # Click on people
+    # pull from HTML <a class="app-aware-link
+    # Create a loop to pull however many peoples info
+    # should shove everything into a json
 
     # Profile Link to be scraped
     link = "https://www.linkedin.com/in/aryanc1027/"
@@ -260,14 +267,13 @@ def getTheInfo():
 
     # use beautiful soup for html parsing
     src = driver.page_source
-    soup = BeautifulSoup(src, 'lxml')
+    soup = BeautifulSoup(src, "html.parser")
 
     # BASIC INFO LIST
     basic_info_list = []
 
-    name_div = soup.find('div', {'class': 'flex-1 mr5'})
-    name_loc = name_div.find_all('ul')
-    fullname = name_loc[0].find('li').get_text().strip()
+    name_div = soup.find('div', {'class': 'mt2 relative'})
+    fullname = name_div.find('h1').get_text().strip()
     try:
         first_name, last_name = fullname.split()
     # above statement fails when a person has put their name as firstname, middlename, lastname
@@ -277,11 +283,12 @@ def getTheInfo():
     basic_info_list.append(first_name)
     basic_info_list.append(last_name)
 
-    headline = name_div.find('h2').get_text().strip()
+    headline_div = soup.find('div', {'class': 'text-body-medium break-words'})
+    headline = headline_div.get_text().strip()
     basic_info_list.append(headline)
     basic_info_list.append(link)
 
-    # print(basic_info_list)
+    print(basic_info_list)
 
     # education section
     education_info_list = []
@@ -344,7 +351,7 @@ def getTheInfo():
         # print("Education Section Exception", e)
         pass
 
-    # print(education_info_list)
+    print(education_info_list)
 
     # Project Section
     projects_info_list = []
@@ -389,7 +396,7 @@ def getTheInfo():
         # no projects added
         # print("Project Section Exception", e)
         pass
-    # print(projects_info_list)
+    print(projects_info_list)
 
     # certifications section
     certifications_info_list = []
@@ -433,13 +440,14 @@ def getTheInfo():
         # adding elements in certifications_info_list as per schema
         for i in range(len(cert_names_list)):
             certifications_info_list.append([cert_names_list[i], cert_dates_list[i], cert_issuer_list[i]])
+            print(certifications_info_list)
 
     except Exception as e:
         # no certificates added
         # print("Certificates Section Exception", e)
         pass
 
-    # print(certifications_info_list)
+
 
     # Experience Section
     experience_info_list = []
@@ -533,7 +541,7 @@ def getTheInfo():
         # No Experience Added
         # print("Experience Section Exception:", e)
         pass
-    # print(experience_info_list)
+    print(experience_info_list)
 
     # Skills Section
     skills_info_list = []
@@ -555,13 +563,13 @@ def getTheInfo():
 
         for i in range(len(all_skills)):
             skills_info_list.append(all_skills[i].get_text().strip())
+            print(skills_info_list)
 
     except Exception as e:
         # No skills added
         # print("Skills Section Exception:", e)
         pass
 
-    # print(skills_info_list)
 
     # Volunteering Section:
     volunteer_info_list = []
@@ -681,20 +689,10 @@ def getTheInfo():
                        experience_info_list, skills_info_list,
                        volunteer_info_list, accomplishments_info_list]
 
-
     print(final_all_lists)
 
 
-
-
-
-
-
-
-
-
 loginInitiate()
-detectClosedWindow()
 recruitmentInitiate()
 detectClosedWindow()
 getTheInfo()
