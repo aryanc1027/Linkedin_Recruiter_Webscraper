@@ -299,7 +299,7 @@ def getTheInfo(link_for_person):
     # print(skills_info_list)
     # print(volunteer_info_list)
     # print(accomplishments_info_list)
-    if len(company_names_list) < 2:
+    if 2 > len(company_names_list) > 0:
         final_all_lists = [basic_info_list, company_names_list]
     else:
         final_all_lists = [basic_info_list]
