@@ -16,6 +16,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 import Scroll
+import Scrape
 
 service = Service(executable_path='./chromedriver.exe')
 options = webdriver.ChromeOptions() 

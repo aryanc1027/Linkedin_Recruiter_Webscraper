@@ -17,6 +17,7 @@ from selenium.webdriver.chrome.service import Service
 
 import Automate
 import Scroll
+import Scrape
 
 # -------------------------------------------------------------------------------------------
 
