@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="776733f9-1465-4d6f-b469-fdfdf8f045d6" name="Changes" comment="Got Name and Headers, Need to change HTML for other sections but all other functionality works.">
+    <list default="true" id="776733f9-1465-4d6f-b469-fdfdf8f045d6" name="Changes" comment="Fixed Stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functionality.py" beforeDir="false" afterPath="$PROJECT_DIR$/functionality.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691177092073</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed Stuff">
+      <created>1691177970009</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1691177970009</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,7 +141,8 @@
     <MESSAGE value="Completed backend to point of getting csv file with all recurters data" />
     <MESSAGE value="Added getTheInfo()" />
     <MESSAGE value="Got Name and Headers, Need to change HTML for other sections but all other functionality works." />
-    <option name="LAST_COMMIT_MESSAGE" value="Got Name and Headers, Need to change HTML for other sections but all other functionality works." />
+    <MESSAGE value="Fixed Stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Stuff" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Summer_Project_1$Front_End.coverage" NAME="Front_End Coverage Results" MODIFIED="1686104153593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
