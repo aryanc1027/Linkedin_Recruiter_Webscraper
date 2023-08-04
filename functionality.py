@@ -274,14 +274,20 @@ def getTheInfo(link_for_person):
     try:
         for company in experience_section:
             company_names_list.append(company.strip().get_text())
+        try:
+            for span in experience_section:
+                raw_text = span.strip()
+                doc = nlp(raw_text)
 
+                for ent in doc.ents:
+                    if ent.label_ == 'ORG':
+                        company_names_list.append(ent.text)
+        except:
+            pass
 
     except Exception as e:
         pass
 
-
-    # Close the driver once scraping is done
-    #driver.close()
 
     # TESTING OUTPUTS
     # print("LISTS")
