@@ -92,6 +92,5 @@ def filterCompanyLinks():
         Scrape.getAllLinks(driver)
 
 loginInitiate()
-detectClosedWindow()
 filterCompanyLinks()
 detectClosedWindow()
