@@ -16,7 +16,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 import Scroll
-import Scrape
 
 service = Service(executable_path='./chromedriver.exe')
 options = webdriver.ChromeOptions() 
@@ -50,7 +49,7 @@ def loginInitiate():
             passw = input('What is your password?\n')
 
             # submitting login information
-            login(driver, user, passw)
+            login(user, passw)
 
             # checks for invalid login
             if driver.current_url == "https://www.linkedin.com/checkpoint/lg/login-submit":
@@ -92,5 +91,6 @@ def filterCompanyLinks():
         Scrape.getAllLinks(driver)
 
 loginInitiate()
+detectClosedWindow()
 filterCompanyLinks()
 detectClosedWindow()
