@@ -250,7 +250,12 @@ def getTheInfo(link_for_person):
         first_name, last_name = fullname.split()
     # above statement fails when a person has put their name as firstname, middlename, lastname
     except:
-        first_name, middle_name, last_name = fullname.split()
+        try:
+            first_name, middle_name, last_name = fullname.split()
+        except Exception as e:
+            first_name = "Unrecognizable"
+            last_name = "Unrecognizable"
+            pass
 
     basic_info_list.append(first_name)
     basic_info_list.append(last_name)
@@ -276,7 +281,7 @@ def getTheInfo(link_for_person):
 
 
     # Close the driver once scraping is done
-    driver.close()
+    #driver.close()
 
     # TESTING OUTPUTS
     # print("LISTS")
@@ -292,6 +297,7 @@ def getTheInfo(link_for_person):
         final_all_lists = [basic_info_list, company_names_list]
     else:
         final_all_lists = [basic_info_list]
+    print(final_all_lists)
     return final_all_lists
 
 
