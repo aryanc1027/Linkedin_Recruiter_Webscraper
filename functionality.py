@@ -16,6 +16,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
+import pyshorteners
+
 
 
 # -------------------------------------------------------------------------------------------
@@ -263,7 +265,9 @@ def getTheInfo(link_for_person):
     headline_div = soup.find('div', {'class': 'text-body-medium break-words'})
     headline = headline_div.get_text().strip()
     basic_info_list.append(headline)
-    basic_info_list.append(link)
+    type_tiny = pyshorteners.Shortener()
+    shorterLink = type_tiny.tinyurl.short(link)
+    basic_info_list.append(shorterLink)
 
 
     # Experience Section
@@ -302,7 +306,7 @@ def getTheInfo(link_for_person):
     if 2 > len(company_names_list) > 0:
         final_all_lists = [basic_info_list, company_names_list]
     else:
-        final_all_lists = [basic_info_list]
+        final_all_lists = basic_info_list
     print(final_all_lists)
     return final_all_lists
 
