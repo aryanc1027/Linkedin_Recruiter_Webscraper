@@ -1,4 +1,4 @@
-# Summer_Project_1
+# LinkedIn Web Scraper
 This script is a Python program for web scraping LinkedIn to filter company links and retrieve information about people related to the recruitment keyword. It utilizes Selenium for browser automation, BeautifulSoup for parsing web content, and other libraries for various functionalities.
 
 **Prerequisites**
