@@ -1,9 +1,10 @@
 import pandas as pd
+import sqlite3
 from flask import Flask, send_file
 
 app = Flask(__name__)
 
-
+# Determines if user wants profile information in Excel File
 @app.route('/toExcel')
 def toExcel():
     condition = input("Do you want to download a Excel File: Yes or No")

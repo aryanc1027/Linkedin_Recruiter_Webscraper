@@ -9,11 +9,11 @@ from flask import Flask, send_file
 import Scroll
 import app
 
-
+# Scraping information from various profiles
 def getAllLinks(driver):
     Scroll.scrollLittle(driver)
 
-    # Getting all urls from page
+    # Getting all links from page using 'href' tag
     links = set()
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -24,8 +24,6 @@ def getAllLinks(driver):
         if 'href' in link.attrs:
             links.add(link['href'])
 
-    # printing all urls
-    # print("\n".join(links))
     final_list = []
     for link in links:
         holder = []
@@ -39,22 +37,15 @@ def getAllLinks(driver):
 def getTheInfo(driver, link_for_person):
     import time
 
-    # Click on people
-    # pull from HTML <a class="app-aware-link
-    # Create a loop to pull however many peoples info
-    # should shove everything into a json
-
     # Profile Link to be scraped
     link = link_for_person
     driver.get(link)
 
-    # pause before scrolling
     SCROLL_PAUSE_TIME = 6
 
-    # Get the scroll height of the page
     last_height = driver.execute_script("return document.body.scrollHeight")
 
-    # scroll the entire page due to dynamic loading of the webpage we need to load the entire webpage by scrolling
+    # Scrolls the entire page due to the dynamic loading of the webpage; we need to load the entire webpage by scrolling
     for i in range(3):
         # Scroll down to bottom
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight/3);")
@@ -72,7 +63,7 @@ def getTheInfo(driver, link_for_person):
         last_height = new_height
 
     try:
-        # click to expand experience section
+        # Click to expand experience section
         experiences_expand_button = driver.find_element_by_xpath(
             "//button[@class='pv-profile-section__see-more-inline pv-profile-section__text-truncate-toggle link link-without-hover-state']")
         driver.execute_script("arguments[0].click();", experiences_expand_button)
@@ -82,10 +73,8 @@ def getTheInfo(driver, link_for_person):
         # inline-show-more-text__button link
         experiences_show_more_expand_button = driver.find_element_by_xpath(
             "//button[@class='inline-show-more-text__button link']")
-        # print(experiences_show_more_expand_button)
         driver.execute_script("arguments[0].click();", experiences_show_more_expand_button)
     except Exception as e:
-        # print("experiences_expand_button Exception:", e)
         pass
 
     try:
@@ -94,10 +83,9 @@ def getTheInfo(driver, link_for_person):
             "//button[@class='pv-profile-section__card-action-bar pv-skills-section__additional-skills artdeco-container-card-action-bar artdeco-button artdeco-button--tertiary artdeco-button--3 artdeco-button--fluid']")
         driver.execute_script("arguments[0].click();", skills_expand_button)
     except Exception as e:
-        # print("skills_expand_button Exception:", e)
         pass
 
-    # use beautiful soup for html parsing
+    # Use BS4 object for html parsing
     src = driver.page_source
     soup = BeautifulSoup(src, "html.parser")
 
@@ -108,7 +96,7 @@ def getTheInfo(driver, link_for_person):
     fullname = name_div.find('h1').get_text().strip()
     try:
         first_name, last_name = fullname.split()
-    # above statement fails when a person has put more than first and last name
+    # Above statement fails when a person has put more than first and last name
     except:
         try:
             first_name, middle_name, last_name = fullname.split()
@@ -150,16 +138,6 @@ def getTheInfo(driver, link_for_person):
     except Exception as e:
         pass
 
-    # TESTING OUTPUTS
-    # print("LISTS")
-    # print(basic_info_list)
-    # print(education_info_list)
-    # print(projects_info_list)
-    # print(certifications_info_list)
-    # print(experience_info_list)
-    # print(skills_info_list)
-    # print(volunteer_info_list)
-    # print(accomplishments_info_list)
     if 2 > len(company_names_list) > 0:
         final_all_lists = [basic_info_list, company_names_list]
     else:
@@ -167,6 +145,7 @@ def getTheInfo(driver, link_for_person):
     return final_all_lists
 
 
+# Exports profile information to SQL Database
 def toDatabase(listOfData):
     connection = sqlite3.connect('Recruiter_Information.db')
     cursor = connection.cursor()

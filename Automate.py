@@ -5,14 +5,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import Scroll
 import Scrape
+import sqlite3
+import pandas as pd
+from flask import Flask, send_file
 
+# Defining a chrome driver object tp navigate through webpages
 service = Service(executable_path='./chromedriver.exe')
 options = webdriver.ChromeOptions() 
 driver = webdriver.Chrome()
 
 global list_items, certificates_section
 
-
+# Submitting login info
 def login(user, passw):
         username = driver.find_element(By.ID, "username")
         username.send_keys(user)
@@ -24,6 +28,7 @@ def login(user, passw):
 
         time.sleep(3)
 
+# Asking for login information and verifying that it is valid
 def loginInitiate():
         # Opening linkedIn's login page
         driver.get("https://linkedin.com/uas/login")
@@ -47,7 +52,7 @@ def loginInitiate():
                 time.sleep(4)
 
 
-    # detects when user closes window (should be last executed method)
+# Detects when user closes window, and ends program
 def detectClosedWindow():
         while True:
             try:
@@ -56,22 +61,22 @@ def detectClosedWindow():
                 break
             time.sleep(1)
 
-
+# Filters by specific user-requested company/companies
 def filterCompanyLinks():
-        # Filtering by specific user-requested company/companies (add multiple companies functionality later)
         userCompany = input('What company are you interested in?\n')
 
         # Google searching for company's LinkedIn
         driver.get('http://www.google.com')
         search = driver.find_element(By.NAME, 'q')
         search.send_keys(userCompany + ' linkedin')
-        search.send_keys(Keys.RETURN)  # hit return after you enter search text
+        search.send_keys(Keys.RETURN) 
 
-        time.sleep(3)  # sleep for 5 seconds so you can see the results
-        # gets all search results and clicks first link
+        time.sleep(3) 
+        
+        # Gets all search results and clicks first link
         driver.find_element(By.CLASS_NAME, "iUh30").click()
 
-        # scrolls to bottom to load all elements of webpage
+        # Scrolls to bottom to load all elements of webpage
         Scroll.scrollToBottom(driver)
 
         curr_url = driver.current_url
