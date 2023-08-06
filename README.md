@@ -23,8 +23,8 @@ This script is a Python program for web scraping LinkedIn to filter company link
 
 **SQL Database Schema**  
 employees(  
-   cid INTEGER PRIMARY KEY,  
-   first_name TEXT,  
-   last_name TEXT,  
-   job_title TEXT,  
-   profile_url TEXT);
+     cid INTEGER PRIMARY KEY,  
+     first_name TEXT,  
+     last_name TEXT,  
+     job_title TEXT,  
+     profile_url TEXT);
