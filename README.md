@@ -22,6 +22,7 @@ This script is a Python program for web scraping LinkedIn to filter company link
 4. Detect Closed Window: The script continuously checks if the browser window is closed by the user, and if so, it terminates the script.
 
 **SQL Database Schema**   
+
 employees(  
 &ensp; &nbsp; &nbsp;cid INTEGER PRIMARY KEY,  
 &ensp; &nbsp; &nbsp;first_name TEXT,  
