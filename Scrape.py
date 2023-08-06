@@ -7,24 +7,25 @@ import pandas as pd
 from flask import Flask, send_file
 
 import Scroll
+import app
 
 
 def getAllLinks(driver):
     Scroll.scrollLittle(driver)
 
-    # getting all urls from page
+    # Getting all urls from page
     links = set()
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
     pplHTML = soup.findAll('a', href=re.compile(r'/in/'))
 
-    # filtering to get profile urls
+    # Filtering to get profile urls out of comprehensive list
     for link in soup.findAll("a", href=re.compile(r'/in/')):
         if 'href' in link.attrs:
             links.add(link['href'])
 
     # printing all urls
-    print("\n".join(links))
+    # print("\n".join(links))
     final_list = []
     for link in links:
         holder = []
@@ -107,7 +108,7 @@ def getTheInfo(driver, link_for_person):
     fullname = name_div.find('h1').get_text().strip()
     try:
         first_name, last_name = fullname.split()
-    # above statement fails when a person has put their name as firstname, middlename, lastname
+    # above statement fails when a person has put more than first and last name
     except:
         try:
             first_name, middle_name, last_name = fullname.split()
@@ -126,8 +127,7 @@ def getTheInfo(driver, link_for_person):
     shorterLink = type_tiny.tinyurl.short(link)
     basic_info_list.append(shorterLink)
 
-    # Experience Section
-
+    # Scrapes Experience Section
     experience_section = soup.find_all('div', {
         'class': 'inline-show-more-text inline-show-more-text--is-collapsed inline-show-more-text--is-collapsed-with-line-clamp inline'})
     company_names_list = []
@@ -184,22 +184,4 @@ def toDatabase(listOfData):
 
     connection.commit()
     connection.close()
-    toExcel()
-
-
-app = Flask(__name__)
-
-
-@app.route('/toExcel')
-def toExcel():
-    condition = input("Do you want to download a Excel File: Yes or No")
-    if (condition == 'no') or (condition == 'No'):
-        exit()
-    connection = sqlite3.connect('Recruiter_Information.db')
-    query = 'SELECT * FROM employees'
-    df = pd.read_sql_query(query, connection)
-    connection.close()
-
-    excel_file_path = 'employees_data.xlsx'
-    df.to_excel(excel_file_path, index=False)
-    return send_file(excel_file_path, as_attachment=True)
+    app.toExcel()
