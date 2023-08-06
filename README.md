@@ -21,7 +21,7 @@ This script is a Python program for web scraping LinkedIn to filter company link
 3. Retrieve People Links: The script will extract the links to the profiles of people related to the recruitment keyword and store them in a list. This list is stored in a SQL database, that can then be exported into an Excel file as per the user's command.
 4. Detect Closed Window: The script continuously checks if the browser window is closed by the user, and if so, it terminates the script.
 
-**SQL Database Schema**  
+**SQL Database Schema**   
 employees(  
 &ensp; &nbsp; &nbsp;cid INTEGER PRIMARY KEY,  
 &ensp; &nbsp; &nbsp;first_name TEXT,  
